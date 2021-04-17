@@ -1,16 +1,20 @@
 Package: RASMART
-Title: What the Package Does (One Line, Title Case)
+Title: Response Adaptive Sequencial Multiple Assignments Randomized Trial
 Version: 0.0.1
 Authors@R: 
-    c(person(given = "Chong",
-           family = "Ma",
-           role = c("aut", "cre"),
-           email = "chongma8903@gmail.com"),
-      person(given = "Junyao",
-             family = "Wang",
-             role = c("aut", "cre"),
-             email = "wangjunyao0121@gmail.com"))
-Description: What the package does (one paragraph).
-License: What license it uses
+    c(person(given = "Junyao", family = "Wang", role = c("aut", "cre"),
+             email = "wangjunyao0121@gmail.com"), 
+      person(given = "Chong", family = "Ma", role = c("ctb"),
+             email = "chongma8903@gmail.com"))
+Maintainer: Junyao Wang <wangjunyao0121@gmail.com>
+Description: Find the optimal randomization probability of multiple treatments 
+   in the second stage in SMART to minimize the expected failure count 
+   conditional on a given power.
+Depends: R (>= 3.6)
+Imports: dplyr,
+         Matrix,
+         mvtnorm
+License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 6.1.1
