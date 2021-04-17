@@ -8,13 +8,14 @@
 #' @param n Sample size in SMART
 #'
 #' @examples
+#'
 #' Q = c(0.5, 0.5, 0.5)
 #' pi1 = c(0.4, 0.35, 0.25)
 #' pi2 = c(0.35, 0.32, 0.36, 0.56, 0.37, 0.4)
+#' P = c(1/3, 1/3, 1/3)
 #' n = 365
 #'
-#' enf(Q, pi1, pi2, n)
-#'
+#' enf(Q, pi1, pi2, P, n)
 #'
 #' @export
 enf <- function(Q,
@@ -32,17 +33,21 @@ enf <- function(Q,
 
 #' Dunn-Sidak power for selecting the best regime in SMART
 #'
-#' @rdname enf
+#' @inheritParams enf
 #'
 #' @return Dunn-Sidak approximated power in SMART
 #'
+#' @importFrom stats  dnorm pnorm
+#'
 #' @examples
+#'
 #' Q = c(0.5, 0.5, 0.5)
 #' pi1 = c(0.4, 0.35, 0.25)
 #' pi2 = c(0.35, 0.32, 0.36, 0.56, 0.37, 0.4)
+#' P = c(1/3, 1/3, 1/3)
 #' n = 365
 #'
-#' DSpower(Q, pi1, pi2, n)
+#' DSpower(Q, pi1, pi2, P, n)
 #'
 #' @export
 DSpower <- function(Q,
@@ -122,7 +127,7 @@ DSpower <- function(Q,
 
 #' MC power for selecting the best regime in SMART
 #'
-#' @rdname enf
+#' @inheritParams enf
 #' @param m number of Monte Carlo repetitions
 #' @param seed seed for generate MC repetitions
 #'
@@ -135,10 +140,11 @@ DSpower <- function(Q,
 #' Q = c(0.5, 0.5, 0.5)
 #' pi1 = c(0.4, 0.35, 0.25)
 #' pi2 = c(0.35, 0.32, 0.36, 0.56, 0.37, 0.4)
+#' P = c(1/3, 1/3, 1/3)
 #' n = 365
 #' m = 10000
 #'
-#' MCpower(Q, pi1, pi2, n, m, seed)
+#' MCpower(Q, pi1, pi2, P, n, m, seed)
 #'
 #' @export
 MCpower <- function(Q = c(0.5, 0.5, 0.5),
@@ -241,7 +247,7 @@ MCpower <- function(Q = c(0.5, 0.5, 0.5),
 
 #' Gradient of log Dunn-Sidak power w.r.t
 #'
-#' @rdname enf
+#' @inheritParams enf
 #'
 #' @return a vector of gradients w.r.t the second stage randomization probability for the
 #'         Dunn-Sidak approximated power in RASMART
@@ -249,12 +255,14 @@ MCpower <- function(Q = c(0.5, 0.5, 0.5),
 #' @importFrom Matrix bdiag
 #'
 #' @examples
+#'
 #' Q = c(0.5, 0.5, 0.5)
 #' pi1 = c(0.4, 0.35, 0.25)
 #' pi2 = c(0.35, 0.32, 0.36, 0.56, 0.37, 0.4)
+#' P = c(1/3, 1/3, 1/3)
 #' n = 365
 #'
-#' DSpowerl_grad(Q, pi1, pi2, n)
+#' DSpowerl_grad(Q, pi1, pi2, P, n)
 #'
 #' @export
 DSpowerl_grad <- function(Q,
@@ -420,36 +428,45 @@ DSpowerl_grad <- function(Q,
 
 #' minimum failure count in RASMART subject to a lower bound of the power
 #'
-#' @rdname enf
-#' @param Q initial second stage randomization probability in SMART
+#' @param x initial second stage randomization probability in SMART
+#' @param pi1 the respond rate of treatment 1, 2, 3 in stage I in SMART
+#' @param pi2 the respond rate for patients who do not respond to a treatment in stage I, but
+#'            respond to another treatment in stage II
+#' @param P Randomization probability in stage I
+#' @param n Sample size in SMART
 #' @param power the minimum controlled power for RASMART
 #' @param alpha.step The step size to search a small alpha for satisfying the Lipschitz constant
 #'            such that f(x) <= f(x_0) + df(x_0)(x-x_0) + 1/(2alpha)||x-x_0||^2. Default is 0.8.
 #' @param lambda_seq The penalty parameter to minimize the lagrangian function.
+#' @param ... other arguments related to mfc
 #'
 #' @import dplyr
 #'
 #' @examples
-#' Q = c(0.5, 0.5, 0.5)
+#'
+#' x = c(0.3, 0.3, 0.3)
 #' pi1 = c(0.4, 0.35, 0.25)
 #' pi2 = c(0.35, 0.32, 0.36, 0.56, 0.37, 0.4)
+#' P = c(1/3, 1/3, 1/3)
 #' n = 365
 #' power = 0.8
 #' alpha.step = 0.8
-#' lambda_seq = seq(1,100, by = 0.5)
+#' lambda_seq = seq(1,50, by = 1)
 #'
-#' mfc(Q, pi1, pi2, n, power, alpha.step, lambda_seq)
+#' mfc(x, pi1, pi2, P, n, power, alpha.step, lambda_seq)
 #'
 #' @export
-mfc.default <- function(Q = c(0.5, 0.5, 0.5),
+mfc.default <- function(x = c(0.5, 0.5, 0.5),
                         pi1 = c(0.4, 0.35, 0.25),
                         pi2 = c(0.35, 0.32, 0.36, 0.56, 0.37, 0.4),
                         P = c(1/3, 1/3, 1/3),
                         n = 365,
                         power = 0.8,
                         alpha.step = 0.8,
-                        lambda_seq = seq(1, 100, by = 0.5)){
-
+                        lambda_seq = seq(1, 100, by = 0.5),
+                        ...){
+  ## initial Q
+  Q = x
   optimal_seq = Lambda_seq = NULL
   # i = 0
   for (lambda in lambda_seq) {
@@ -546,8 +563,8 @@ mfc.default <- function(Q = c(0.5, 0.5, 0.5),
                 AllTab = AllTab)
   names(result$optimalQ) = names(grad_Q)
 
-  result$call = match.call()
-  class(result) = "mfc"
+  result$call <- match.call()
+  class(result) <- "mfc"
 
   result
 }
@@ -555,8 +572,7 @@ mfc.default <- function(Q = c(0.5, 0.5, 0.5),
 
 #' mfc generic
 #'
-#' @param x an object of class from "mfc".
-#'
+#' @param x an object of class from ''mfc''.
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @keywords internal
@@ -565,7 +581,7 @@ mfc.default <- function(Q = c(0.5, 0.5, 0.5),
 #'
 #'
 #' @export
-mfc <- function(x,...) UseMethod("mfc")
+mfc <- function(x, ...) UseMethod("mfc")
 
 
 #' @rdname mfc
