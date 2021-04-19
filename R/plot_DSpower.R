@@ -16,6 +16,7 @@
 #'          numerical value between 0 and 1.
 #'
 #' @importFrom stats  dnorm pnorm
+#' @importFrom plot3D contour2D
 #'
 #' @examples
 #'
