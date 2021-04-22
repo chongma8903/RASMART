@@ -4,10 +4,17 @@
 \alias{mfc.default}
 \title{minimum failure count in RASMART subject to a lower bound of the power}
 \usage{
-\method{mfc}{default}(x = c(0.5, 0.5, 0.5), pi1 = c(0.4, 0.35, 0.25),
-  pi2 = c(0.35, 0.32, 0.36, 0.56, 0.37, 0.4), P = c(1/3, 1/3, 1/3),
-  n = 365, power = 0.8, alpha.step = 0.8, lambda_seq = seq(1, 100,
-  by = 0.5), ...)
+\method{mfc}{default}(
+  x = c(0.5, 0.5, 0.5),
+  pi1 = c(0.4, 0.35, 0.25),
+  pi2 = c(0.35, 0.32, 0.36, 0.56, 0.37, 0.4),
+  P = c(1/3, 1/3, 1/3),
+  n = 365,
+  power = 0.8,
+  alpha.step = 0.8,
+  lambda_seq = seq(1, 100, by = 0.5),
+  ...
+)
 }
 \arguments{
 \item{x}{initial second stage randomization probability in SMART}

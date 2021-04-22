@@ -4,9 +4,15 @@
 \alias{MCpower}
 \title{MC power for selecting the best regime in SMART}
 \usage{
-MCpower(Q = c(0.5, 0.5, 0.5), pi1 = c(0.4, 0.35, 0.25), pi2 = c(0.35,
-  0.32, 0.36, 0.56, 0.37, 0.4), P = c(1/3, 1/3, 1/3), n = 365,
-  m = 10000, seed = 2021)
+MCpower(
+  Q = c(0.5, 0.5, 0.5),
+  pi1 = c(0.4, 0.35, 0.25),
+  pi2 = c(0.35, 0.32, 0.36, 0.56, 0.37, 0.4),
+  P = c(1/3, 1/3, 1/3),
+  n = 365,
+  m = 10000,
+  seed = 2021
+)
 }
 \arguments{
 \item{Q}{a vector of (Q12, Q21, Q31) for second stage randomization probability in SMART}

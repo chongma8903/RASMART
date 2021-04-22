@@ -1,5 +1,5 @@
 #' expected number of failure in SMART
-#'
+#' 
 #' @param Q a vector of (Q12, Q21, Q31) for second stage randomization probability in SMART
 #' @param pi1 the respond rate of treatment 1, 2, 3 in stage I in SMART
 #' @param pi2 the respond rate for patients who do not respond to a treatment in stage I, but

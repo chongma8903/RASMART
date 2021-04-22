@@ -4,8 +4,13 @@
 \alias{DSpowerl_grad}
 \title{Gradient of log Dunn-Sidak power w.r.t}
 \usage{
-DSpowerl_grad(Q, pi1 = c(0.4, 0.35, 0.25), pi2 = c(0.35, 0.32, 0.36,
-  0.56, 0.37, 0.4), P = c(1/3, 1/3, 1/3), n = 365)
+DSpowerl_grad(
+  Q,
+  pi1 = c(0.4, 0.35, 0.25),
+  pi2 = c(0.35, 0.32, 0.36, 0.56, 0.37, 0.4),
+  P = c(1/3, 1/3, 1/3),
+  n = 365
+)
 }
 \arguments{
 \item{Q}{a vector of (Q12, Q21, Q31) for second stage randomization probability in SMART}
