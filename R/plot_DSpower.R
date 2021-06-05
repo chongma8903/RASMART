@@ -29,6 +29,7 @@
 #' n = 365
 #'
 #' plot_DSpower(Q1, Q2, Q3, pi1, pi2, P, n, col = "black", nlevels = 30)
+#' plot_DSpower(Q1, Q2, Q3, pi1, pi2, P, n, col = "black", nlevels = 20)
 #'
 #' @export
 plot_DSpower <- function(Q1, Q2, Q3, pi1, pi2, P, n, ...) {
